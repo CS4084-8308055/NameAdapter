@@ -35,6 +35,11 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.NameViewHolder
 
     }
 
+    public void removeName(int index){
+        mNames.remove(index);
+        notifyItemRemoved(index);
+        notifyItemRangeChanged(0, mNames.size());
+    }
     private String getRandomName() {
         String[] names = new String[] {
                 "David Beck", "David Berry", "Ian Berry", "Niall Broderick", "Conor Clancy", "Mary Cronin",
@@ -74,6 +79,13 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.NameViewHolder
             super(itemView);
             mNameTextView = itemView.findViewById(R.id.name);
             mDescriptionTextView = itemView.findViewById(R.id.description);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    removeName(getAdapterPosition());
+                    return true;
+                }
+            });
         }
     }
 }
